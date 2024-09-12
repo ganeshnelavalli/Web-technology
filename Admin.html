@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Borrowed Books</title>
+    <style>
+        header {
+            background-color: #343a40;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logout-btn {
+            background-color: #dc3545;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <h1>Library Book Access</h1>
+            <p>Welcome,Admin!</p>
+        </div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </header>
+    <h1>Borrowed Books</h1>
+    <table id="borrowedBooksTable" border="1">
+        <thead>
+            <tr>
+                <th>Person</th>
+                <th>Book</th>
+                <th>Department</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Borrowed book details will be inserted here -->
+        </tbody>
+    </table>
+
+    <script>
+        let borrowedBooks = JSON.parse(localStorage.getItem('borrowedBooks')) || [];
+        const tableBody = document.querySelector('#borrowedBooksTable tbody');
+        var currentTime = new Date();
+        borrowedBooks.forEach(book => {
+            const row = document.createElement('tr');
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0');
+            var yyyy = today.getFullYear();
+            today = mm + '/' + dd + '/' + yyyy;
+            row.innerHTML = `
+                <td>${book.person}</td>
+                <td>${book.book}</td>
+                <td>${book.department}</td>
+                <td>${today}</td>
+            `;
+            tableBody.appendChild(row);
+        });
+        function logout() {
+            window.location.href = 'login1.html'; 
+        }
+    </script>
+</body>
+</html>
